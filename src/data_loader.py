@@ -23,27 +23,22 @@ class CoupletDataset(Dataset):
         self.vocab_size = len(self.vocab)
 
     def load_data(self, path):
-        """加载数据并去除空格"""
         with open(path, 'r', encoding='utf-8') as f:
             sentences = [line.strip().replace(' ', '') for line in f.readlines()]
         return sentences
 
     def build_vocab(self):
-        """从训练数据构建词汇表"""
         all_words = []
         for sent in self.in_sentences + self.out_sentences:
             all_words.extend(list(sent))
 
-        # 取出现频率最高的词
         word_counts = Counter(all_words)
         top_words = [word for word, _ in word_counts.most_common(config.VOCAB_SIZE - 4)]
 
-        # 添加特殊符号
         vocab = ['<PAD>', '<UNK>', '<SOS>', '<EOS>'] + top_words
         return vocab
 
     def encode(self, sentence):
-        """将句子编码为索引序列"""
         encoded = [self.word2idx['<SOS>']]  # 起始符号
         for word in list(sentence):
             if word in self.word2idx:

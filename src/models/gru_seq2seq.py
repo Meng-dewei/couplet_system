@@ -21,8 +21,6 @@ class GRUEncoder(nn.Module):
     def forward(self, x):
         embed = self.embedding(x)
         out, hidden = self.gru(embed)
-
-        # 调整双向GRU的隐藏层形状
         batch_size = hidden.size(1)
         hidden = hidden.view(self.num_layers, 2, batch_size, self.hidden_dim)
         hidden = torch.cat((hidden[:, 0, :, :], hidden[:, 1, :, :]), dim=2)

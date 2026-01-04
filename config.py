@@ -49,7 +49,8 @@ TRANSFORMER_CONFIG = {
 PRETRAINED_CONFIG = {
     "bert": {
         "model_name": "bert-base-chinese",
-        "save_path": os.path.join(MODEL_SAVE_DIR, "bert_model.pt")
+        "save_path": os.path.join(MODEL_SAVE_DIR, "bert_model.pt"),
+        "device": DEVICE  # 新增：设备配置
     },
     "gpt2": {
         "model_name": "uer/gpt2-chinese-cluecorpussmall",
